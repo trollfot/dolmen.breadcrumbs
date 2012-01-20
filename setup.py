@@ -44,7 +44,7 @@ setup(name = name,
       classifiers = [
           'Environment :: Web Environment',
           'Intended Audience :: Other Audience',
-          'License :: OSI Approved :: Zope Public License (ZPL)',
+          'License :: OSI Approved :: Zope Public License',
           'Operating System :: OS Independent',
           'Programming Language :: Python',
           ],
