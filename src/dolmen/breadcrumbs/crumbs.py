@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import urllib
-from cromlech.io import IPublicationRoot
+from cromlech.browser import IPublicationRoot
 from dolmen.location import get_absolute_url, lineage_chain
 from zope.dublincore.interfaces import IDCDescriptiveProperties
 

@@ -2,15 +2,14 @@ from setuptools import setup, find_packages
 from os.path import join
 
 name = 'dolmen.breadcrumbs'
-version = '0.1'
+version = '0.2'
 readme = open(join('src', 'dolmen', 'breadcrumbs', 'README.txt')).read()
 history = open(join('docs', 'HISTORY.txt')).read()
 
 install_requires = [
-    'cromlech.browser >= 0.4',
-    'cromlech.io',
-    'dolmen.location >= 0.1',
-    'dolmen.template',
+    'cromlech.browser >= 0.5',
+    'dolmen.location >= 0.2',
+    'dolmen.template >= 0.2',
     'grokcore.component',
     'setuptools',
     'zope.dublincore',

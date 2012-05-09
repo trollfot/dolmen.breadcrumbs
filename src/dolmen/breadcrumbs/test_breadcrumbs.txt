@@ -7,7 +7,7 @@ Getting started
 We need to provide a root::
 
   >>> from zope.location import Location
-  >>> from cromlech.io import IPublicationRoot
+  >>> from cromlech.browser import IPublicationRoot
   >>> from zope.interface import directlyProvides
 
   >>> root = Location()
@@ -15,8 +15,8 @@ We need to provide a root::
 
 We also need a request, to compute the URLs::
 
-  >>> from cromlech.browser.testing import TestHTTPRequest
-  >>> request = TestHTTPRequest()
+  >>> from cromlech.browser.testing import TestRequest
+  >>> request = TestRequest()
 
 Now, we should basically get a result here:
 
@@ -27,7 +27,7 @@ Now, we should basically get a result here:
 If there's an application URL that meeses up with our base url, it should
 be reflected::
 
-  >>> request = TestHTTPRequest(application_url='http://localhost/app')
+  >>> request = TestRequest(application_url='http://localhost/app')
   >>> print list(breadcrumbs(root, request))
   [{'url': 'http://localhost/app', 'name': None}]
 
