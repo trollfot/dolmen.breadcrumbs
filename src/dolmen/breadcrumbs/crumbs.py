@@ -2,8 +2,8 @@
 
 import urllib
 from cromlech.browser import IPublicationRoot
+from cromlech.content import IDescriptiveSchema
 from dolmen.location import get_absolute_url, lineage_chain
-from zope.dublincore.interfaces import IDCDescriptiveProperties
 
 
 _safe = '@+'  # Characters that we don't want to have quoted
@@ -16,7 +16,7 @@ def resolve_name(item):
     name = getattr(item, '__name__', None)
     if name is None and not IPublicationRoot.providedBy(item):
         raise KeyError('Object name (%r) could not be resolved.' % item)
-    dc = IDCDescriptiveProperties(item, None)
+    dc = IDescriptiveSchema(item, default=None)
     if dc is not None and dc.title:
         return name, dc.title
     return name, name
