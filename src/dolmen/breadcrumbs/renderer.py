@@ -2,6 +2,7 @@
 
 from os import path
 from cromlech.browser import IRenderable
+from cromlech.i18n import ILanguage
 from dolmen.breadcrumbs import breadcrumbs
 from dolmen.template import TALTemplate
 from zope.interface import implements
@@ -12,7 +13,10 @@ template = TALTemplate(path.join(TEMPLATES_DIR, 'breadcrumbs.pt'))
 
 
 def render_breadcrumbs(renderer, crumbs, separator="&rarr;"):
-    namespace = dict(breadcrumbs=crumbs, separator=separator)
+    namespace = dict(
+        breadcrumbs=crumbs,
+        target_language=ILanguage(renderer.request, None),
+        separator=separator)
     return template.render(renderer, **namespace)
 
 
@@ -25,6 +29,6 @@ class BreadcrumbsRenderer(object):
 
     def update(self):
         self.breadcrumbs = list(breadcrumbs(self.context, self.request))
-    
+
     def render(self):
         return render_breadcrumbs(self, self.breadcrumbs)

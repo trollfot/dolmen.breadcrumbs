@@ -10,9 +10,7 @@ install_requires = [
     'cromlech.browser >= 0.5',
     'dolmen.location >= 0.2',
     'dolmen.template >= 0.2',
-    'grokcore.component',
     'setuptools',
-    'zope.dublincore',
     'zope.interface',
     ]
 
