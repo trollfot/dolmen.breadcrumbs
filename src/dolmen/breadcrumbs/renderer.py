@@ -23,12 +23,15 @@ def render_breadcrumbs(renderer, crumbs, separator="&rarr;"):
 class BreadcrumbsRenderer(object):
     implements(IRenderable)
 
+    resolver = None
+    
     def __init__(self, context, request):
         self.context = context
         self.request = request
 
     def update(self):
-        self.breadcrumbs = list(breadcrumbs(self.context, self.request))
+        self.breadcrumbs = list(
+            breadcrumbs(self.context, self.request, self.resolver))
 
     def render(self):
         return render_breadcrumbs(self, self.breadcrumbs)

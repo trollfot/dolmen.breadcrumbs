@@ -2,7 +2,6 @@
 
 import urllib
 from cromlech.browser import IPublicationRoot
-from cromlech.content import IDescriptiveSchema
 from dolmen.location import get_absolute_url, lineage_chain
 
 
@@ -16,22 +15,19 @@ def resolve_name(item):
     name = getattr(item, '__name__', None)
     if name is None and not IPublicationRoot.providedBy(item):
         raise KeyError('Object name (%r) could not be resolved.' % item)
-    dc = IDescriptiveSchema(item, default=None)
-    if dc is not None and dc.title:
-        return name, dc.title
     return name, name
 
 
-def breadcrumbs(item, request):
+def breadcrumbs(item, request, resolver=resolve_name):
     kin = lineage_chain(item)
     if kin:
         kin.reverse()
         root = kin.pop(0)
         base_url = get_absolute_url(root, request)
-        name, title = resolve_name(root)
+        name, title = resolver(root)
         yield {'name': title, 'url': base_url}
 
         for sibling in kin:
-            name, title = resolve_name(sibling)
+            name, title = resolver(sibling)
             base_url += '/' + urllib.quote(name.encode('utf-8'), _safe)
             yield {'name': title, 'url': base_url}
