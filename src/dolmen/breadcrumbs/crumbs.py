@@ -4,6 +4,7 @@ import urllib
 from cromlech.browser import IPublicationRoot
 from dolmen.location import get_absolute_url, lineage_chain
 from zope.dublincore.interfaces import IDCDescriptiveProperties
+from zope.i18nmessageid import Message
 
 
 _safe = '@+'  # Characters that we don't want to have quoted
