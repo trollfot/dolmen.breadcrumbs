@@ -5,8 +5,9 @@
     <a href=""
        tal:attributes="href crumb['url']"
        tal:content="crumb['name']">name</a>
-    <span tal:condition="not: repeat['crumb'].end"
-	  class="divider" tal:content="structure separator" />
+    <span class="divider"
+	  tal:content="structure separator"
+	  tal:condition="not: repeat['crumb'].end" />
   </span>
   </tal:loop>
 </div>

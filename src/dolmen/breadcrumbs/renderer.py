@@ -5,7 +5,7 @@ from cromlech.browser import IRenderable
 from cromlech.i18n import ILanguage
 from dolmen.breadcrumbs import breadcrumbs
 from dolmen.template import TALTemplate
-from zope.interface import implements
+from zope.interface import implementer
 
 
 TEMPLATES_DIR = path.join(path.dirname(__file__), 'templates')
@@ -20,8 +20,8 @@ def render_breadcrumbs(renderer, crumbs, separator="&rarr;"):
     return template.render(renderer, **namespace)
 
 
+@implementer(IRenderable)
 class BreadcrumbsRenderer(object):
-    implements(IRenderable)
 
     resolver = None
     

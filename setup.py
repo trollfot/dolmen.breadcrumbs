@@ -7,6 +7,7 @@ readme = open(join('src', 'dolmen', 'breadcrumbs', 'README.txt')).read()
 history = open(join('docs', 'HISTORY.txt')).read()
 
 install_requires = [
+    'cromlech.i18n',
     'cromlech.browser >= 0.5',
     'dolmen.location >= 0.2',
     'dolmen.template >= 0.2',

@@ -19,6 +19,8 @@ def resolve_name(item):
 
 
 def breadcrumbs(item, request, resolver=resolve_name):
+    if resolver is None:
+        resolver = resolve_name
     kin = lineage_chain(item)
     if kin:
         kin.reverse()

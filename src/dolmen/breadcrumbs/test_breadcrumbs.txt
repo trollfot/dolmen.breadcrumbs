@@ -2,6 +2,7 @@ Getting started
 ===============
 
   >>> from grokcore.component import testing
+  >>> testing.grok('dolmen.breadcrumbs')
   >>> testing.grok('dolmen.location')
 
 We need to provide a root::
@@ -73,34 +74,13 @@ What if...
   KeyError: 'Object name (<...Location object...>) could not be resolved.'
 
 
-Who art thou ?
-==============
-
-  >>> from zope.dublincore.interfaces import IDCDescriptiveProperties
-  >>> from zope.interface import implements
-
-  >>> class DescriptiveLocation(Location):
-  ...    implements(IDCDescriptiveProperties)
-  ...
-  ...    def __init__(self, title="", description="", *args, **kws):
-  ...        self.title = title
-  ...        self.description = description
-  ...        Location.__init__(self, *args, **kws)
+Show me !
+=========
 
   >>> lady = Location()
   >>> locate(lady, root, 'lady')
-  >>> thane = DescriptiveLocation(title='McBeth')
+  >>> thane = Location()
   >>> locate(thane, lady, 'thane')
-
-  >>> print list(breadcrumbs(thane, request))
-  ... # doctest: +NORMALIZE_WHITESPACE
-  [{'url': 'http://localhost/app', 'name': 'Bob'},
-   {'url': 'http://localhost/app/lady', 'name': 'lady'},
-   {'url': 'http://localhost/app/lady/thane', 'name': 'McBeth'}]
-
-
-Show me !
-=========
 
   >>> from dolmen.breadcrumbs import BreadcrumbsRenderer
   >>> renderer = BreadcrumbsRenderer(thane, request)
@@ -117,6 +97,6 @@ Show me !
       <span class="divider">&rarr;</span>
     </span>
     <span class="crumb">
-      <a href="http://localhost/app/lady/thane">McBeth</a>
+      <a href="http://localhost/app/lady/thane">thane</a>
     </span>
   </div>
