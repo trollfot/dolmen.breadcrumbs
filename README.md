@@ -1,7 +1,7 @@
 Beadcrumbs
 ==========
 
-Breadcrumbs are a way to display one's location in a hierchical  object model.
+Breadcrumbs are a way to display one's location in a hierarchical  object model.
 
 Github uses them at the top of each page, to let you know where you are. 
 
