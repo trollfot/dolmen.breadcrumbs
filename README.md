@@ -1,4 +1,4 @@
-Beadcrumbs
+Breadcrumbs
 ==========
 
 Breadcrumbs are a way to display one's location in a hierarchical  object model.
