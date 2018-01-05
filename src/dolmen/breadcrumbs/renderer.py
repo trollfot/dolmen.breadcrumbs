@@ -15,6 +15,7 @@ template = TALTemplate(path.join(TEMPLATES_DIR, 'breadcrumbs.pt'))
 def render_breadcrumbs(renderer, crumbs, separator="&rarr;"):
     namespace = dict(
         breadcrumbs=crumbs,
+        viewName=crums.viewName,
         target_language=ILanguage(renderer.request, None),
         separator=separator)
     return template.render(renderer, **namespace)
@@ -25,9 +26,10 @@ class BreadcrumbsRenderer(object):
 
     resolver = None
     
-    def __init__(self, context, request):
+    def __init__(self, context, request, viewName='index'):
         self.context = context
         self.request = request
+        self.viewName = viewName
 
     def update(self):
         self.breadcrumbs = list(
