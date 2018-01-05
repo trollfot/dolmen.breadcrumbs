@@ -38,7 +38,6 @@ render_breadcrums which calls the
 So I think what we want to do is something like
 
 ```
-from dolmen.breadcrumbs import
 from dolmen.breadcrumbs. import breadcrumbs
 from dolmen.breadcrumbs. import BreadcrumbsRenderer
 class MyPage(Page):
