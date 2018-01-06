@@ -9,31 +9,35 @@ Many ZODB applications also use them.
 
 This package displays them.
 
-Dolmen.Breadcrumbs assumes that there is a root object which
-implements IPublicationRoot.
-
 The simplest way to use breadcrumbs is as follows:
 
 ```
-from dolmen.breadcrumbs import BasicBreadCrumbs
-BasicBreadCrumbs(item,request).render()
+from dolmen.breadcrumbs import basicBreadCrumbs
+print (basicBreadCrumbs(item,request))
 ```
 
-In practice you will want to add this to your Page subclasses
+In practice you will want to use breadcrumbs in your
+web pages, and so you add them to your Page subclasses
 
 ```
-from dolmen.breadcrumbs import BasicBreadCrumbs
+from dolmen.breadcrumbs import basicBreadCrumbs
 class MyPage(Page):
     define breadcrumbs():
-        return BasicBreadCrumbs(self.context,request).render()
+        return basicBreadCrumbs(self.context,self.request)
 ```
 
-Then in the Page Template add in
+Then in the Page Template just call them.
    ${view.breadcrumbs()}
 
-And you should have breadcrums on your page. 
+And you should have breadcrumbs on your page. 
 
-Of course if you want to customize it, you can dig deeper.
+Of course if you want to customize it, you can.  Let us
+explore how they work. 
+
+Dolmen.Breadcrumbs assumes that there is a root object which
+implements IPublicationRoot.  It gets the paretns of an object (kin),
+using dolmen.location, and then genates a list of dictionaires with the
+information for each item.  Finally it converst that list into html.
 
 In [dolmen.breadcrumbs/src/dolmen/breadcrumbs/crumbs.py](./src/dolmen/breadcrumbs/crumbs.py])
 There are two methods.
@@ -52,8 +56,8 @@ render_breadcrums which calls the
 [template](./src/dolmen/breadcrumbs/templates/breadcrumbs.pt)
 
 
-Christopher Lozinski Writes about these breadcrumbs: "They are
-beautifully designed, but not that heavily used, not that many features.
-In contast the breadcrums I wrote and have been using have a lot
-more features, but are less well designed, so I am migrating to dolmen.breadcrumbs
-and adding features. It should be quite easy to do."
+Christopher Lozinski writes about these breadcrumbs: "They are
+beautifully designed, whatever changes I needed to make just took 
+a few lines of code. "
+
+
