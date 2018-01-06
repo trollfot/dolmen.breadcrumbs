@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import urllib
 from cromlech.browser import IPublicationRoot
 from dolmen.location import get_absolute_url, lineage_chain
 
+try:
+        from urllib import quote  # Python 2.X
+except ImportError:
+        from urllib.parse import quote  # Python 3+
 
 _safe = '@+'  # Characters that we don't want to have quoted
 
@@ -17,24 +20,28 @@ def resolve_name(item):
 
     if name is None and not IPublicationRoot.providedBy(item):
         raise KeyError('Object name (%r) could not be resolved.' % item)
-    if (title != None)
+
+    if (title != None):
         return name, title
     return name, name
 
 
-
-def breadcrumbs(item, request, viewName='index, 'resolver=resolve_name):
+def breadcrumbs(item, request, viewName='', resolver=resolve_name):
+    #IF YOU WANT A SPECFIC VIEWNAME, THEN PREPEND A SLASH
+    if viewName != '':
+       viewName ='/' + viewName
     if resolver is None:
         resolver = resolve_name
-    kin = lineage_chain(item)
-    if kin:
-        kin.reverse()
-        root = kin.pop(0)
-        base_url = get_absolute_url(root, request)
+    parents = lineage_chain(item)
+    if parents:
+        parents.reverse()
+        root = parents.pop(0)
+        #base_url = get_absolute_url(root, request)
+        base_url="pythonLinks.info:8081"
         name, title = resolver(root)
         yield {'name': title, 'url': base_url + viewName}
 
-        for sibling in kin:
-            name, title = resolver(sibling)
-            base_url += '/' + urllib.quote(name.encode('utf-8'), _safe)
+        for ancestor in parents:
+            name, title = resolver(ancestor)
+            base_url += '/' + quote(name.encode('utf-8'), _safe)
             yield {'name': title, 'url': base_url+ viewName}

@@ -3,9 +3,10 @@
 from dolmen.breadcrumbs.crumbs import breadcrumbs
 from dolmen.breadcrumbs.renderer import BreadcrumbsRenderer
 
-def BasicBreadCrumbs(item,request):
-       crumbs=BreadCrynbsRender()
-       crumbs.breadcrums=breadcrumbs(item,request)
+def defaultBreadcrumbs(item,request):
+       #import pdb; pdb.set_trace()
+       crumbs=BreadcrumbsRenderer(item,request,viewName='')
+       crumbs.update()
        return crumbs.render()
 
-   
+

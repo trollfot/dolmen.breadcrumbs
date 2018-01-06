@@ -12,13 +12,15 @@ TEMPLATES_DIR = path.join(path.dirname(__file__), 'templates')
 template = TALTemplate(path.join(TEMPLATES_DIR, 'breadcrumbs.pt'))
 
 
-def render_breadcrumbs(renderer, crumbs, separator="&rarr;"):
+def render_breadcrumbs(renderer, crumbs, viewName='', separator="&rarr;"):
     namespace = dict(
         breadcrumbs=crumbs,
-        viewName=crums.viewName,
-        target_language=ILanguage(renderer.request, None),
+        viewName=viewName,
+        target_language='en',
         separator=separator)
     return template.render(renderer, **namespace)
+    #    target_language=ILanguage(renderer.request, None),
+        #WHAT SHOULD I HAVE DONE HERE?
 
 
 @implementer(IRenderable)
@@ -26,14 +28,14 @@ class BreadcrumbsRenderer(object):
 
     resolver = None
     
-    def __init__(self, context, request, viewName='index'):
+    def __init__(self, context, request, viewName=''):
         self.context = context
         self.request = request
         self.viewName = viewName
 
     def update(self):
         self.breadcrumbs = list(
-            breadcrumbs(self.context, self.request, self.resolver))
+            breadcrumbs(self.context, self.request, self.viewName, self.resolver))
 
     def render(self):
         return render_breadcrumbs(self, self.breadcrumbs)
