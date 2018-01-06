@@ -1,6 +1,23 @@
 Changelog
 =========
 
+Unreleased (2018-01-06)
+----------
+Created a function defaultBreadcrumbs(item,request)
+This makes it really easy for beginners to get started.
+
+Breadcrums now show the title, if there is one.
+
+There is an option to specify the view name.  Previously
+it used the default view, now it is possile to have
+breadcrumbs for '/index' or '/manage' or potentially
+something different.
+
+renamed some 'kin' to 'parents'.
+
+Major Documentatin added to README.md.
+
+
 0.2.1 (2017-03-18)
 ------------------
 
