@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from cromlech.browser import IPublicationRoot
-from dolmen.location import get_absolute_url, lineage_chain
+from dolmen.location import lineage_chain
+from dolmen.location import resolve_url
+from dolmen.location import get_absolute_url
+
 
 try:
         from urllib import quote  # Python 2.X
@@ -37,7 +40,7 @@ def breadcrumbs(item, request, viewName='', resolver=resolve_name):
         parents.reverse()
         root = parents.pop(0)
         #base_url = get_absolute_url(root, request)
-        base_url="pythonLinks.info:8081"
+        base_url = resolve_url(root, request)        
         name, title = resolver(root)
         yield {'name': title, 'url': base_url + viewName}
 

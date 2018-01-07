@@ -11,13 +11,13 @@ from zope.interface import implementer
 TEMPLATES_DIR = path.join(path.dirname(__file__), 'templates')
 template = TALTemplate(path.join(TEMPLATES_DIR, 'breadcrumbs.pt'))
 
-
-def render_breadcrumbs(renderer, crumbs, viewName='', separator="&rarr;"):
+def render_breadcrumbs(renderer, crumbs, viewName='', separator=''):
     namespace = dict(
         breadcrumbs=crumbs,
         viewName=viewName,
         target_language='en',
         separator=separator)
+    
     return template.render(renderer, **namespace)
     #    target_language=ILanguage(renderer.request, None),
         #WHAT SHOULD I HAVE DONE HERE?
@@ -28,14 +28,14 @@ class BreadcrumbsRenderer(object):
 
     resolver = None
     
-    def __init__(self, context, request, viewName=''):
+    def __init__(self, context, request, viewName='', separator="&rarr;"):
         self.context = context
         self.request = request
         self.viewName = viewName
-
+        self.separator=separator
     def update(self):
         self.breadcrumbs = list(
             breadcrumbs(self.context, self.request, self.viewName, self.resolver))
 
     def render(self):
-        return render_breadcrumbs(self, self.breadcrumbs)
+        return render_breadcrumbs(self, self.breadcrumbs, viewName=self.viewName, separator=self.separator)
