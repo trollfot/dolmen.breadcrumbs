@@ -1,9 +1,17 @@
 Getting started
 ===============
 
-  >>> from grokcore.component import testing
-  >>> testing.grok('dolmen.breadcrumbs')
-  >>> testing.grok('dolmen.location')
+  >>> import crom
+  >>> import dolmen.breadcrumbs
+  >>> import cromlech.location
+
+  >>> crom.monkey.incompat()
+  >>> crom.implicit.initialize()
+
+  >>> crom.configure(
+  ...     dolmen.breadcrumbs,
+  ...     cromlech.location,
+  ... )
 
 We need to provide a root::
 
@@ -22,21 +30,21 @@ We also need a request, to compute the URLs::
 Now, we should basically get a result here:
 
   >>> from dolmen.breadcrumbs import breadcrumbs
-  >>> print list(breadcrumbs(root, request))
-  [{'url': 'http://localhost', 'name': None}]
+  >>> assert list(breadcrumbs(root, request)) == [
+  ...     {'url': 'http://localhost', 'name': None}]
 
 If there's an application URL that meeses up with our base url, it should
 be reflected::
 
   >>> request = TestRequest(application_url='http://localhost/app')
-  >>> print list(breadcrumbs(root, request))
-  [{'url': 'http://localhost/app', 'name': None}]
+  >>> assert list(breadcrumbs(root, request)) == [
+  ...     {'url': 'http://localhost/app', 'name': None}]
 
 If the item gets a name, it should be reflected also::
 
   >>> root.__name__ = 'Bob'
-  >>> print list(breadcrumbs(root, request))
-  [{'url': 'http://localhost/app', 'name': 'Bob'}]
+  >>> assert list(breadcrumbs(root, request)) == [
+  ...     {'url': 'http://localhost/app', 'name': 'Bob'}]
 
 
 Siblings, for I am his kinsman !
@@ -46,18 +54,18 @@ Siblings, for I am his kinsman !
   >>> duncan = Location()
   >>> locate(duncan, root, 'Duncan')
 
-  >>> print list(breadcrumbs(duncan, request))
-  ... # doctest: +NORMALIZE_WHITESPACE
-  [{'url': 'http://localhost/app', 'name': 'Bob'},
-   {'url': 'http://localhost/app/Duncan', 'name': 'Duncan'}]
+  >>> assert list(breadcrumbs(duncan, request)) == [
+  ...     {'url': 'http://localhost/app', 'name': 'Bob'},
+  ...     {'url': 'http://localhost/app/Duncan', 'name': 'Duncan'}
+  ... ]
 
   >>> malcolm = Location()
   >>> locate(malcolm, duncan, 'Malcolm Heir of the Realm')
-  >>> print list(breadcrumbs(malcolm, request))
-  ... # doctest: +NORMALIZE_WHITESPACE
-  [{'url': 'http://localhost/app', 'name': 'Bob'},
-   {'url': 'http://localhost/app/Duncan', 'name': 'Duncan'},
-   {'url': 'http://localhost/app/Duncan/Malcolm%20Heir%20of%20the%20Realm', 'name': 'Malcolm Heir of the Realm'}]
+  >>> assert list(breadcrumbs(malcolm, request)) == [
+  ...     {'url': 'http://localhost/app', 'name': 'Bob'},
+  ...     {'url': 'http://localhost/app/Duncan', 'name': 'Duncan'},
+  ...     {'url': 'http://localhost/app/Duncan/Malcolm%20Heir%20of%20the%20Realm', 'name': 'Malcolm Heir of the Realm'}
+  ... ]
 
 
 What if...
@@ -68,7 +76,7 @@ What if...
   >>> anonymous = Location()
   >>> anonymous.__parent__ = root
 
-  >>> print list(breadcrumbs(anonymous, request)) # doctest: +ELLIPSIS
+  >>> list(breadcrumbs(anonymous, request)) # doctest: +ELLIPSIS
   Traceback (most recent call last):
   ...
   KeyError: 'Object name (<...Location object...>) could not be resolved.'
@@ -85,7 +93,7 @@ Show me !
   >>> from dolmen.breadcrumbs import BreadcrumbsRenderer
   >>> renderer = BreadcrumbsRenderer(thane, request)
   >>> renderer.update()
-  >>> print renderer.render()  # doctest: +NORMALIZE_WHITESPACE
+  >>> print(renderer.render())  # doctest: +NORMALIZE_WHITESPACE
   <div class="breadcrumb">
     <span class="you-are-here">You are here :</span>
     <span class="crumb">

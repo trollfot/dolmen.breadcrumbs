@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import urllib
+from urllib import parse
 from cromlech.browser import IPublicationRoot
-from dolmen.location import get_absolute_url, lineage_chain
+from cromlech.location import get_absolute_url, lineage_chain
 
 
 _safe = '@+'  # Characters that we don't want to have quoted
@@ -31,5 +31,5 @@ def breadcrumbs(item, request, resolver=resolve_name):
 
         for sibling in kin:
             name, title = resolver(sibling)
-            base_url += '/' + urllib.quote(name.encode('utf-8'), _safe)
+            base_url += '/' + parse.quote(name.encode('utf-8'), _safe)
             yield {'name': title, 'url': base_url}
